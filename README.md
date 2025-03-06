@@ -34,3 +34,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+Azul #007BFF (Primária) → Cor principal para botões, cabeçalhos e destaque. Representa confiança e tecnologia.
+Cinza #F4F4F4 (Fundo) → Para manter a interface limpa e profissional.
+Branco #FFFFFF (Texto e fundo secundário) → Para manter o contraste e melhorar a legibilidade.
+Preto #1C1C1C (Texto Principal) → Para títulos e informações importantes.
+Verde #28A745 (Ações Concluídas) → Pode ser usado para indicar progresso ou status de tarefas concluídas.
