@@ -74,7 +74,7 @@ export default function FormTableProduct() {
         </div>
         <button
           type="submit"
-          className="bg-primary w-36 h-8 rounded text-white mt-10"
+          className="bg-primary w-36 h-8 rounded text-white mt-10 mx-auto"
         >
           Cadastrar Produto
         </button>
