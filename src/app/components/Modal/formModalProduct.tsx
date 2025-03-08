@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { products } from "@/app/helpers/products";
+import { useEffect, useState } from "react";
 
-export default function FormTableProduct() {
+interface ModalProps {
+  idProduct: number | null;
+}
+
+export default function FormModalProduct({ idProduct }: ModalProps) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -20,6 +25,21 @@ export default function FormTableProduct() {
     const value = e.target.value;
     setPrice(formatPrice(value));
   };
+
+  useEffect(() => {
+    if (idProduct != null) {
+      const product = products[idProduct-1];
+      setName(product.name);
+      setDescription(product.description);
+      setPrice(product.price);
+      setQuantityStock(product.quantityStock);
+    }else{
+      setName("");
+      setDescription("");
+      setPrice("");
+      setQuantityStock("");
+    }
+  }, [idProduct]);
 
   return (
     <>
@@ -74,9 +94,9 @@ export default function FormTableProduct() {
         </div>
         <button
           type="submit"
-          className="bg-primary w-36 h-8 rounded text-white mt-10 mx-auto"
+          className="bg-primary w-36 h-8 rounded text-white mt-5 mx-auto"
         >
-          Cadastrar Produto
+          {idProduct == null ? "Cadastrar Produto" : "Salvar Edição"}
         </button>
       </form>
       <p>{price}</p>
