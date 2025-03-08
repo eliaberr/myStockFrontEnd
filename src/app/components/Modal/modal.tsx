@@ -7,10 +7,10 @@ import { CiTrash } from "react-icons/ci";
 
 interface ModalProps {
   closeModal: () => void;
-  idProduct: number | null
+  idProduct: number | null;
 }
 
-export default function Modal({idProduct, closeModal }: ModalProps) {
+export default function Modal({ idProduct, closeModal }: ModalProps) {
   const [fileName, setFileName] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -23,15 +23,12 @@ export default function Modal({idProduct, closeModal }: ModalProps) {
     }
   };
 
-  const deleteFile = () => {
-    setFileName("");
-    setImageUrl(null);
-  };
-
   return (
     <section className="fixed inset-0 flex flex-col items-center justify-center bg-black/50">
       <div className="text-center w-[360px] max-h-[700px] py-3 px-3 rounded-3xl shadow-2xs mx-auto bg-gray-200 mt-10 overflow-y-auto relative">
-        <button className="absolute right-10 bg-red-500" onClick={closeModal}>x</button>
+        <button className="absolute right-10 bg-red-500" onClick={closeModal}>
+          x
+        </button>
         <h2 className="font-bold text-xl">Adicionar Produto</h2>
         <div>
           <div className="mt-4 w-[200px] h-[200px] mx-auto bg-stone-300 flex justify-center items-center">
@@ -41,8 +38,9 @@ export default function Modal({idProduct, closeModal }: ModalProps) {
               <Image
                 src={imageUrl}
                 alt="Uploaded Image"
-                width={200}
-                height={200}
+                width={100}
+                height={100}
+                className="w-full h-full"
               />
             )}
           </div>
@@ -53,7 +51,13 @@ export default function Modal({idProduct, closeModal }: ModalProps) {
               onChange={fileChange}
             />
             {imageUrl != null ? (
-              <button onClick={deleteFile} className="absolute right-5 ">
+              <button
+                onClick={() => {
+                  setFileName("");
+                  setImageUrl(null);
+                }}
+                className="absolute right-5 "
+              >
                 <CiTrash className="text-3xl text-red-600" />
               </button>
             ) : (
@@ -63,9 +67,7 @@ export default function Modal({idProduct, closeModal }: ModalProps) {
 
           {fileName && <p>{fileName}</p>}
         </div>
-        <FormTableProduct
-          idProduct={idProduct}
-        />
+        <FormTableProduct idProduct={idProduct} />
       </div>
     </section>
   );
