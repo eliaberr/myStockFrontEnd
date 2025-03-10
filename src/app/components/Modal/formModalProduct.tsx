@@ -1,11 +1,10 @@
 "use client";
 
-import { getProducts, Product } from "@/app/helpers/api";
-import { products } from "@/app/helpers/products";
+import { getProducts, Product } from "@/app/helpers/productsApi";
 import { useEffect, useState } from "react";
 
 interface ModalProps {
-  idProduct: number | null;
+  idProduct: string | undefined;
 }
 
 export default function FormModalProduct({ idProduct }: ModalProps) {
@@ -27,25 +26,36 @@ export default function FormModalProduct({ idProduct }: ModalProps) {
     setPrice(formatPrice(value));
   };
 
-  const addProduct = () => {
+  const upsertProduct = (method: string, id?: string) => {
     const product: Product = {
       name,
       description,
       price,
       quantityStock,
     };
+    getProducts(method, product, id);
 
-    getProducts("POST", product);
+    alert(`Produto ${method === "PUT" ? "editado" : "criado"} com sucesso`);
+  };
+
+  const deleteProduct = (id: string) => {
+    getProducts("DELETE", undefined, id);
+    window.location.reload();
+    alert("Produto Excluido");
   };
 
   useEffect(() => {
-    
-    if (idProduct != null) {
-      const product = products[idProduct - 1];
-      setName(product.name);
-      setDescription(product.description);
-      setPrice(product.price);
-      setQuantityStock(product.quantityStock);
+    if (idProduct != undefined) {
+      const fetchProducts = async () => {
+        const product = await getProducts("GET", undefined, idProduct);
+        if (product.length > 0) {
+          setName(product[0].name);
+          setDescription(product[0].description);
+          setPrice(product[0].price);
+          setQuantityStock(product[0].quantityStock);
+        }
+      };
+      fetchProducts();
     } else {
       setName("");
       setDescription("");
@@ -54,8 +64,15 @@ export default function FormModalProduct({ idProduct }: ModalProps) {
     }
   }, [idProduct]);
 
+  console.log("aqui esta o ids table edit", idProduct);
+
   return (
-    <form onSubmit={addProduct} className="flex flex-col text-start gap-5 mt-10">
+    <form
+      onSubmit={() => {
+        upsertProduct(idProduct != undefined ? "PUT" : "POST", idProduct);
+      }}
+      className="flex flex-col text-start gap-5 mt-10"
+    >
       <div className="flex flex-col">
         <label htmlFor="1">Name</label>
         <input
@@ -109,14 +126,15 @@ export default function FormModalProduct({ idProduct }: ModalProps) {
           type="submit"
           className="bg-primary w-36 h-8 rounded text-white mt-5 mx-auto"
         >
-          {idProduct == null ? "Cadastrar Produto" : "Salvar Edição"}
+          {idProduct == undefined ? "Cadastrar Produto" : "Salvar Edição"}
         </button>
-        {idProduct == null ? (
+        {idProduct == undefined ? (
           <></>
         ) : (
           <button
-            type="submit"
+            type="button"
             className="bg-red-500 w-36 h-8 rounded text-white mt-5 mx-auto"
+            onClick={() => deleteProduct(idProduct)}
           >
             Excluir Produto
           </button>

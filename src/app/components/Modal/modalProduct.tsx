@@ -4,10 +4,11 @@ import Image from "next/image";
 import FormTableProduct from "./formModalProduct";
 import { useState } from "react";
 import { CiTrash } from "react-icons/ci";
+import { IoMdClose } from "react-icons/io";
 
 interface ModalProps {
   closeModal: () => void;
-  idProduct: number | null;
+  idProduct: string | undefined;
 }
 
 export default function Modal({ idProduct, closeModal }: ModalProps) {
@@ -23,15 +24,20 @@ export default function Modal({ idProduct, closeModal }: ModalProps) {
     }
   };
 
+  console.log("aqui esta o ids modal", idProduct);
+
   return (
     <section className="fixed inset-0 flex flex-col items-center justify-center bg-black/50">
-      <div className="text-center w-[360px] max-h-[700px] py-3 px-3 rounded-3xl shadow-2xs mx-auto bg-gray-200 mt-10 overflow-y-auto relative">
-        <button className="absolute right-10 bg-red-500" onClick={closeModal}>
-          x
+      <div className="text-center w-[22.5rem] max-h-[43.75rem] py-3 px-3 rounded-3xl shadow-2xs mx-auto bg-gray-200 mt-10 overflow-y-auto relative">
+        <button
+          className="absolute right-10 top-4 bg-red-500 w-5 h-5 rounded-full flex items-center justify-center"
+          onClick={closeModal}
+        >
+          <IoMdClose />
         </button>
         <h2 className="font-bold text-xl">Adicionar Produto</h2>
         <div>
-          <div className="mt-4 w-[200px] h-[200px] mx-auto bg-stone-300 flex justify-center items-center">
+          <div className="mt-4 w-[12.5rem] h-[12.5rem] mx-auto bg-stone-300 flex justify-center items-center">
             {imageUrl === null ? (
               <></>
             ) : (
@@ -44,10 +50,10 @@ export default function Modal({ idProduct, closeModal }: ModalProps) {
               />
             )}
           </div>
-          <div className="flex justify-center items-center w-[250px] mx-auto relative mt-1.5">
+          <div className="flex justify-center items-center w-[15.625rem] mx-auto relative mt-1.5">
             <input
               type="file"
-              className="bg-primary w-[128px] h-8 flex rounded p-1 text-white"
+              className="bg-primary w-[8rem] h-8 flex rounded p-1 text-white"
               onChange={fileChange}
             />
             {imageUrl != null ? (

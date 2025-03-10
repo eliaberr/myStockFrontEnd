@@ -1,5 +1,5 @@
 export interface Product {
-    id?: number;
+    id?: string;
     name: string;
     description: string;
     price: string;
@@ -20,10 +20,10 @@ export const getProducts = async (chosenMethod:string,product?:Product,id?:strin
                 'Content-Type': 'application/json',
             },
         };
-        if (chosenMethod === 'POST' && product) {
+        if ((chosenMethod === "POST" || chosenMethod === "PUT") && product) {
             options.body = JSON.stringify(product);
         }
-        const response = await fetch(`http://localhost:3006/products${idSelected}`, options);
+        const response = await fetch(`http://localhost:3006/products/${idSelected}`, options);
         const data = await response.json();
         console.log(data);
         return data;
